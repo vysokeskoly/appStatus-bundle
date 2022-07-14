@@ -1,0 +1,87 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set appStatus = collector.appStatus %}
+
+    {% set icon %}
+        {{ include('@AppStatus/Profiler/icon.svg') }}
+        <span class="sf-toolbar-value">{{ collector.mainStatus }}</span>
+    {% endset %}
+
+    {% if appStatus is not empty %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b>Source</b>
+                <span class="sf-toolbar-status sf-toolbar-status-green">
+                    {{ collector.statusFile }}
+                </span>
+            </div>
+            {% for item in appStatus %}
+                <div class="sf-toolbar-info-piece">
+                    <b>{{ item.title }}</b>
+                    <span class="sf-toolbar-status {% if item.color is not empty %} sf-toolbar-status-{{ item.color }}{% endif %}">
+                        {{ item.value }}
+                    </span>
+                </div>
+            {% endfor %}
+        {% endset %}
+
+    {% else %}
+
+        {% set status = 'red' %}
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <span>Unable to load status from "{{ collector.statusFile }}".</span>
+            </div>
+        {% endset %}
+
+    {% endif %}
+
+    {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label{% if collector.appStatus is empty %} label-status-error{% endif %}">
+        <span class="icon">
+            {{ include('@AppStatus/Profiler/icon.svg') }}
+        </span>
+
+        <strong>App Status</strong>
+
+        {% if collector.appStatus is empty %}
+            <label class="count">N/A</label>
+        {% endif %}
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>App Status{% if collector.appStatus is empty %} is unknown{% endif %}</h2>
+
+    {% if collector.appStatus is empty %}
+        <p class="help">
+            Unable to load status from "{{ collector.statusFile }}".
+        </p>
+    {% else %}
+        <p class="help">
+            Status loaded from "{{ collector.statusFile }}".
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in collector.appStatus %}
+                    <tr>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.value }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
