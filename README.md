@@ -1,6 +1,12 @@
 App Status Bundle
 =================
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/vysokeskoly/app-status-bundle.svg)](https://packagist.org/packages/vysokeskoly/app-status-bundle)
+[![License](https://img.shields.io/packagist/l/vysokeskoly/app-status-bundle.svg)](https://packagist.org/packages/vysokeskoly/app-status-bundle)
+[![Checks](https://github.com/vysokeskoly/appStatus-bundle/actions/workflows/checks.yaml/badge.svg)](https://github.com/vysokeskoly/appStatus-bundle/actions/workflows/checks.yaml)
+[![Build](https://github.com/vysokeskoly/appStatus-bundle/actions/workflows/php-checks.yaml/badge.svg)](https://github.com/vysokeskoly/appStatus-bundle/actions/workflows/php-checks.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/vysokeskoly/appStatus-bundle/badge.svg)](https://coveralls.io/github/vysokeskoly/appStatus-bundle)
+
 This bundle adds a `Collector` which adds buildinfo into your Symfony profiler.
 
 ## Changelog
