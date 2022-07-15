@@ -14,9 +14,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff.Found' => [
                 'src/Services/AppStatusCollector.php',
             ],
-        ]
+        ],
     );
 
     $containerConfigurator->import(__DIR__ . '/tools/coding-standards/vendor/lmc/coding-standard/ecs.php');
-    $containerConfigurator->import(__DIR__ . '/tools/coding-standards/vendor/lmc/coding-standard/ecs-7.4.php');
+    $containerConfigurator->import(__DIR__ . '/tools/coding-standards/vendor/lmc/coding-standard/ecs-8.1.php');
 };

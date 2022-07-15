@@ -4,15 +4,8 @@ namespace VysokeSkoly\AppStatusBundle\Entity;
 
 class Item
 {
-    private string $title;
-    private string $value;
-    private ?string $color;
-
-    public function __construct(string $title, string $value, ?string $color = null)
+    public function __construct(private string $title, private string $value, private ?string $color = null)
     {
-        $this->title = $title;
-        $this->value = $value;
-        $this->color = $color;
     }
 
     public function getTitle(): string

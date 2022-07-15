@@ -4,14 +4,14 @@
     "license": "proprietary",
     "type": "symfony-bundle",
     "require": {
-        "php": "^7.4",
+        "php": "^8.1",
         "ext-SimpleXML": "*",
         "ext-json": "*",
         "beberlei/assert": "^3.2",
-        "symfony/config": "^5.0",
-        "symfony/dependency-injection": "^5.0",
-        "symfony/http-foundation": "^5.0",
-        "symfony/http-kernel": "^5.0"
+        "symfony/config": "^5.0 || ^6.0",
+        "symfony/dependency-injection": "^5.0 || ^6.0",
+        "symfony/http-foundation": "^5.0 || ^6.0",
+        "symfony/http-kernel": "^5.0 || ^6.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.28",
@@ -44,7 +44,7 @@
             "@installTools"
         ],
         "post-update-cmd": [
-            "@installTools"
+            "@updateTools"
         ],
         "all": [
             "@lint",

@@ -37,7 +37,7 @@ class AppStatusCollectorTest extends TestCase
                 'hostName' => new Item('hostName', (string) gethostname()),
                 'node' => new Item('node', ''),
             ],
-            $appStatusCollector->getAppStatus()
+            $appStatusCollector->getAppStatus(),
         );
     }
 
