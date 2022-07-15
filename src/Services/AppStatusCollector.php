@@ -2,6 +2,7 @@
 
 namespace VysokeSkoly\AppStatusBundle\Services;
 
+use Assert\Assertion;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -11,15 +12,21 @@ class AppStatusCollector extends DataCollector
 {
     public const DEFAULT_MAIN_STATUS = 'Unknown status';
 
-    private string $appRoot;
+    private string $projectRoot;
     private string $appStatusFilePath;
     private ?string $mainStatusKey;
+    private ?string $envFile;
 
-    public function __construct(string $appRoot, string $appStatusFilePath, ?string $mainStatusKey = null)
-    {
-        $this->appRoot = $appRoot;
+    public function __construct(
+        string $projectRoot,
+        string $appStatusFilePath,
+        ?string $mainStatusKey = null,
+        ?string $envFile = null
+    ) {
+        $this->projectRoot = $projectRoot;
         $this->appStatusFilePath = $appStatusFilePath;
         $this->mainStatusKey = $mainStatusKey;
+        $this->envFile = $envFile;
     }
 
     public function getName(): string
@@ -30,18 +37,39 @@ class AppStatusCollector extends DataCollector
     public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         $appStatus = [];
-        $filename = $this->appRoot . '/' . $this->appStatusFilePath;
+        $filename = $this->projectRoot . '/' . $this->appStatusFilePath;
+        $envName = '';
+        $envColor = '';
 
         if (file_exists($filename) && is_readable($filename)) {
-            $xmlContent = simplexml_load_string((string) file_get_contents($filename));
-            $statusArray = json_decode((string) json_encode($xmlContent), true);
+            $statusArray = $this->loadXmlAsArray($filename);
 
             foreach ($statusArray as $key => $value) {
+                if (is_array($value)) {
+                    $value = empty($value)
+                        ? ''
+                        : var_export($value, true);
+                }
+
                 if ($key === 'hostName') {
                     $value = str_replace('__HOSTNAME__', (string) gethostname(), $value);
                 }
 
-                $appStatus[$key] = new Item($key, trim($value));
+                $appStatus[$key] = new Item((string) $key, trim($value));
+            }
+        }
+
+        if (file_exists((string) $this->envFile) && is_readable((string) $this->envFile)) {
+            $xml = $this->loadXml((string) $this->envFile);
+            $attributes = $xml->attributes();
+            Assertion::notNull($attributes);
+
+            $envName = (string) ($attributes->name ?? '');
+
+            if ($envName === 'prod') {
+                $envColor = 'green';
+            } elseif ($envName === 'dev') {
+                $envColor = 'yellow';
             }
         }
 
@@ -49,7 +77,24 @@ class AppStatusCollector extends DataCollector
             'mainStatus' => $this->findMainStatus($appStatus),
             'appStatus' => $appStatus,
             'statusFile' => $this->appStatusFilePath,
+            'envName' => $envName,
+            'envColor' => $envColor,
         ];
+    }
+
+    private function loadXmlAsArray(string $file): array
+    {
+        return json_decode((string) json_encode($this->loadXml($file)), true);
+    }
+
+    private function loadXml(string $file): \SimpleXMLElement
+    {
+        $simpleXMLElement = simplexml_load_string((string) file_get_contents($file));
+        if ($simpleXMLElement === false) {
+            throw new \RuntimeException(sprintf('XML "%s" could not be loaded.', $file));
+        }
+
+        return $simpleXMLElement;
     }
 
     /**
@@ -57,7 +102,7 @@ class AppStatusCollector extends DataCollector
      */
     private function findMainStatus(array $appStatus): string
     {
-        return is_string($this->mainStatusKey) && array_key_exists($this->mainStatusKey, $appStatus)
+        return array_key_exists((string) $this->mainStatusKey, $appStatus)
             ? $appStatus[$this->mainStatusKey]->getValue()
             : self::DEFAULT_MAIN_STATUS;
     }
@@ -83,5 +128,15 @@ class AppStatusCollector extends DataCollector
     public function reset(): void
     {
         $this->data = [];
+    }
+
+    public function getEnvName(): string
+    {
+        return $this->data['envName'];
+    }
+
+    public function getEnvColor(): string
+    {
+        return $this->data['envColor'];
     }
 }

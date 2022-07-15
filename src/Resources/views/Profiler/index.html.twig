@@ -3,14 +3,27 @@
 {% block toolbar %}
     {% set appStatus = collector.appStatus %}
 
+    {% set envName %}
+        {% if collector.envName is not empty %}
+            <div class="sf-toolbar-info-piece">
+                <b>Environment</b>
+                <span class="sf-toolbar-status sf-toolbar-status-{{ collector.envColor }}">
+                    {{ collector.envName }}
+                </span>
+            </div>
+        {% endif %}
+    {% endset %}
+
     {% set icon %}
         {{ include('@AppStatus/Profiler/icon.svg') }}
         <span class="sf-toolbar-value">{{ collector.mainStatus }}</span>
     {% endset %}
 
     {% if appStatus is not empty %}
-
         {% set text %}
+
+            {{ envName }}
+
             <div class="sf-toolbar-info-piece">
                 <b>Source</b>
                 <span class="sf-toolbar-status sf-toolbar-status-green">
@@ -28,9 +41,11 @@
         {% endset %}
 
     {% else %}
-
         {% set status = 'red' %}
         {% set text %}
+
+            {{ envName }}
+
             <div class="sf-toolbar-info-piece">
                 <span>Unable to load status from "{{ collector.statusFile }}".</span>
             </div>
@@ -57,6 +72,8 @@
 
 {% block panel %}
     <h2>App Status{% if collector.appStatus is empty %} is unknown{% endif %}</h2>
+
+    <h3>Environment - {{ collector.envName }}</h3>
 
     {% if collector.appStatus is empty %}
         <p class="help">

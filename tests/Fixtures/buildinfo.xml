@@ -11,4 +11,5 @@
     <buildUrl>https://jenkins/job/app-status/666/</buildUrl>
     <project>app_status_bundle</project>
     <hostName>__HOSTNAME__</hostName>
+    <node/>
 </appStatus>

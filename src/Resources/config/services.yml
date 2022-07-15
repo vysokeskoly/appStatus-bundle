@@ -1,9 +1,10 @@
 services:
     VysokeSkoly\AppStatusBundle\Services\AppStatusCollector:
-        arguments:
-            - "%kernel.project_dir%"
-            - "%app_status.source_file%"
-            - "%app_status.main_status_key%"
         public: false
+        arguments:
+            $projectRoot: '%kernel.project_dir%'
+            $appStatusFilePath: '%app_status.source_file%'
+            $mainStatusKey: '%app_status.main_status_key%'
+            $envFile: '%app_status.env_file%'
         tags:
-            - { name: data_collector, template: "@AppStatus/Profiler/index.html.twig", id: appStatus }
+            - { name: data_collector, template: '@VysokeSkolyAppStatus/Profiler/index.html.twig', id: 'appStatus' }
