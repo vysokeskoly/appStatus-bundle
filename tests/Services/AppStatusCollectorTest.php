@@ -20,7 +20,7 @@ class AppStatusCollectorTest extends TestCase
 
         $appStatusCollector->collect(new Request(), new Response());
 
-        $this->assertFileExists($appRoot . '/' . $sourceFile);
+        $this->assertFileExists($sourceFile);
         $this->assertSame('appStatus', $appStatusCollector->getName());
         $this->assertSame($sourceFile, $appStatusCollector->getStatusFile());
         $this->assertSame($expectedMainStatus, $appStatusCollector->getMainStatus());
@@ -35,6 +35,7 @@ class AppStatusCollectorTest extends TestCase
                 'buildUrl' => new Item('buildUrl', 'https://jenkins/job/app-status/666/'),
                 'project' => new Item('project', 'app_status_bundle'),
                 'hostName' => new Item('hostName', (string) gethostname()),
+                'node' => new Item('node', ''),
             ],
             $appStatusCollector->getAppStatus()
         );
@@ -47,5 +48,20 @@ class AppStatusCollectorTest extends TestCase
             'name' => ['name', 'vs-app-status'],
             'hostName' => ['hostName', gethostname()],
         ];
+    }
+
+    public function testShouldCollectEnvData(): void
+    {
+        $appRoot = __DIR__ . '/../..';
+        $sourceFile = 'tests/Fixtures/buildinfo.xml';
+        $envFile = __DIR__ . '/../Fixtures/config.xml';
+        $appStatusCollector = new AppStatusCollector($appRoot, $sourceFile, null, $envFile);
+
+        $appStatusCollector->collect(new Request(), new Response());
+        $envName = $appStatusCollector->getEnvName();
+        $envColor = $appStatusCollector->getEnvColor();
+
+        $this->assertSame('prod', $envName);
+        $this->assertSame('green', $envColor);
     }
 }

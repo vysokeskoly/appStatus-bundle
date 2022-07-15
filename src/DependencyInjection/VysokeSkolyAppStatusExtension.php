@@ -24,5 +24,6 @@ class VysokeSkolyAppStatusExtension extends Extension
 
         $container->setParameter('app_status.source_file', $config['source_file']);
         $container->setParameter('app_status.main_status_key', $config['main_status_key']);
+        $container->setParameter('app_status.env_file', $config['env_file']);
     }
 }

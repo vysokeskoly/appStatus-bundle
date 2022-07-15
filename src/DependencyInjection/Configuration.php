@@ -20,6 +20,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('main_status_key')
                     ->defaultValue('buildBranch')
                 ->end()
+                ->scalarNode('env_file')
+                    ->defaultValue('/etc/vysokeskoly.xml')
+                ->end()
             ->end();
 
         return $treeBuilder;

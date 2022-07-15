@@ -2,3 +2,7 @@
 /vendor
 /reports
 .phpunit.result.cache
+
+# tools
+/tools/**
+!/tools/*/composer.*
