@@ -15,7 +15,7 @@
     {% endset %}
 
     {% set icon %}
-        {{ include('@AppStatus/Profiler/icon.svg') }}
+        {{ include('@VysokeSkolyAppStatus/Profiler/icon.svg') }}
         <span class="sf-toolbar-value">{{ collector.mainStatus }}</span>
     {% endset %}
 
@@ -59,7 +59,7 @@
 {% block menu %}
     <span class="label{% if collector.appStatus is empty %} label-status-error{% endif %}">
         <span class="icon">
-            {{ include('@AppStatus/Profiler/icon.svg') }}
+            {{ include('@VysokeSkolyAppStatus/Profiler/icon.svg') }}
         </span>
 
         <strong>App Status</strong>

@@ -1,6 +1,7 @@
 Changelog
 
 Unreleased
+- Fix collector template bundle link
 
 ## 6.1.0 - 2022-07-15
 - Add `env_file` option
