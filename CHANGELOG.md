@@ -1,6 +1,8 @@
 Changelog
 
 Unreleased
+
+## 6.1.1 - 2022-07-15
 - Fix collector template bundle link
 
 ## 6.1.0 - 2022-07-15
