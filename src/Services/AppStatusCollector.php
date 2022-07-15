@@ -12,21 +12,12 @@ class AppStatusCollector extends DataCollector
 {
     public const DEFAULT_MAIN_STATUS = 'Unknown status';
 
-    private string $projectRoot;
-    private string $appStatusFilePath;
-    private ?string $mainStatusKey;
-    private ?string $envFile;
-
     public function __construct(
-        string $projectRoot,
-        string $appStatusFilePath,
-        ?string $mainStatusKey = null,
-        ?string $envFile = null
+        private string $projectRoot,
+        private string $appStatusFilePath,
+        private ?string $mainStatusKey = null,
+        private ?string $envFile = null,
     ) {
-        $this->projectRoot = $projectRoot;
-        $this->appStatusFilePath = $appStatusFilePath;
-        $this->mainStatusKey = $mainStatusKey;
-        $this->envFile = $envFile;
     }
 
     public function getName(): string
