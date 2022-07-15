@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<appStatus>
+    <name>vs-app-status</name>
+    <version>2017.03.08.16.30.28-68.gad10e8af8</version>
+    <sourceRevision>ad10e8af8814f825e36e629ab1a19c5078a6d257</sourceRevision>
+    <repository>
+        ssh://git/app-status-bundle.git
+    </repository>
+    <buildNumber>666</buildNumber>
+    <buildBranch>feature/app-status-bundle</buildBranch>
+    <buildUrl>https://jenkins/job/app-status/666/</buildUrl>
+    <project>app_status_bundle</project>
+    <hostName>__HOSTNAME__</hostName>
+</appStatus>
