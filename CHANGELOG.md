@@ -1,6 +1,8 @@
 Changelog
 
 Unreleased
+
+## 7.1.0 - 2024-10-25
 - Add Symfony 7 support
 - Drop Symfony 5 support
 
