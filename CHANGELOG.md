@@ -1,6 +1,8 @@
 Changelog
 
 Unreleased
+- Add Symfony 7 support
+- Drop Symfony 5 support
 
 ## 7.0.0 - 2022-07-15
 - Allow Symfony 6
