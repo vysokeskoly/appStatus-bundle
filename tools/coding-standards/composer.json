@@ -1,7 +1,7 @@
 {
     "name": "tools/coding-standards",
     "require-dev": {
-        "lmc/coding-standard": "^3.3"
+        "lmc/coding-standard": "^4.1"
     },
     "authors": [
         {

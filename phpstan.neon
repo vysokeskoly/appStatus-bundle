@@ -1,6 +1,6 @@
 parameters:
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - identifier: missingType.iterableValue
 
     excludePaths:
         - src/DependencyInjection/Configuration.php

@@ -17,8 +17,7 @@ class AppStatusCollector extends DataCollector
         private string $appStatusFilePath,
         private ?string $mainStatusKey = null,
         private ?string $envFile = null,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

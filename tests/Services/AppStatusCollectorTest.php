@@ -2,6 +2,7 @@
 
 namespace VysokeSkoly\AppStatusBundle\Services;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,9 +10,7 @@ use VysokeSkoly\AppStatusBundle\Entity\Item;
 
 class AppStatusCollectorTest extends TestCase
 {
-    /**
-     * @dataProvider mainStatusKeyProvider
-     */
+    #[DataProvider('provideMainStatusKey')]
     public function testShouldCollectBuildInfoData(?string $mainStatusKey, string $expectedMainStatus): void
     {
         $appRoot = __DIR__ . '/../..';
@@ -41,7 +40,7 @@ class AppStatusCollectorTest extends TestCase
         );
     }
 
-    public function mainStatusKeyProvider(): array
+    public static function provideMainStatusKey(): array
     {
         return [
             'empty' => [null, 'Unknown status'],
