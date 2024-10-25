@@ -4,6 +4,4 @@ namespace VysokeSkoly\AppStatusBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class VysokeSkolyAppStatusBundle extends Bundle
-{
-}
+class VysokeSkolyAppStatusBundle extends Bundle {}
